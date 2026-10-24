@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>聊有数 · 任务更新助手</title>
+<link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/review.css"><script defer src="/review.js"></script><script defer src="/table.js"></script><script defer src="/app.js"></script>
+</head>
+<body data-view="prepare" data-section="assistant">
+<svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 11.5a8 8 0 0 1-8 8H4l1.4-4A8 8 0 1 1 20 11.5Z"/><path d="M8 10h8M8 14h5"/></symbol>
+<symbol id="i-table" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 9v11"/></symbol>
+<symbol id="i-history" viewBox="0 0 24 24"><path d="M4 9a8 8 0 1 1 0 6M4 4v5h5M12 7v5l3 2"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="16" cy="12" r="2"/><circle cx="8" cy="18" r="2"/></symbol>
+<symbol id="i-panel" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></symbol>
+<symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7V5h7l2 2h9v13H3Z"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M4 16v5h16v-5"/></symbol>
+<symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4m-4 4 4-4 4 4M4 15v5h16v-5"/></symbol>
+</defs></svg>
+<aside class="app-sidebar" aria-label="应用导航">
+<div class="brand"><span class="brand-icon" aria-hidden="true"><svg class="icon"><use href="#i-chat"/></svg></span><strong>聊有数</strong></div>
+<nav class="main-nav"><button id="nav-assistant" class="nav-item active" aria-current="page"><svg class="icon"><use href="#i-chat"/></svg><span>更新助手</span><span id="pending-count" class="nav-count" hidden></span></button><button id="nav-table" class="nav-item"><svg class="icon"><use href="#i-table"/></svg><span>任务表</span><span id="mobile-count" class="nav-count">0</span></button><button id="nav-materials" class="nav-item"><svg class="icon"><use href="#i-folder"/></svg><span>材料</span></button><button id="nav-history" class="nav-item"><svg class="icon"><use href="#i-history"/></svg><span>处理记录</span></button></nav>
+<div class="sidebar-bottom"><span id="test-banner" class="test-label" hidden></span><button id="settings" class="nav-item"><svg class="icon"><use href="#i-settings"/></svg><span>设置</span></button><div class="save-state"><span class="save-dot"></span><span id="save-info">正在读取…</span></div></div>
+</aside>
+<div class="app-main">
+<header class="topbar"><div class="toolbar-leading"><button id="sidebar-toggle" class="icon-button" aria-label="收起侧栏" aria-expanded="true"><svg class="icon"><use href="#i-panel"/></svg></button><h1 id="page-title">更新助手</h1><span id="page-context" class="page-context">上传材料</span></div><div class="top-actions"><button id="mobile-table" class="quiet" aria-label="查看当前任务" aria-pressed="false"><svg class="icon"><use href="#i-panel"/></svg><span>当前任务</span></button><button id="toolbar-undo" class="quiet" hidden aria-label="撤销上次确认"><span aria-hidden="true">↶</span><span>撤销</span></button><button id="download" class="quiet" hidden><svg class="icon"><use href="#i-download"/></svg><span>下载</span></button></div></header>
+<div id="notice" role="status" aria-live="polite" hidden></div>
+<main class="workspace" id="assistant-view">
+<section class="chat-column" aria-label="更新任务表">
+<div class="journey"><ol id="steps" class="steps" aria-label="当前更新流程"><li data-step="0"><span>1</span><div>准备材料</div></li><li data-step="1"><span>2</span><div>核对变化</div></li><li data-step="2"><span>3</span><div>保存结果</div></li></ol></div>
+<div class="chat-scroll">
+<button id="back-main" class="text-button back-link" hidden>← 返回当前进度</button>
+<div class="assistant-greeting"><span class="eyebrow" id="greeting-label">每次更新，都有据可查</span><h2 id="next-title">把聊过的事，安排明白。</h2><p id="next-description">上传任务表和聊天记录，我会帮你找出需要更新的地方。</p></div>
+<section class="materials" aria-label="上传材料"><div class="upload-grid"><div id="task-upload"></div><div id="chat-upload"></div></div><div id="pending-reminder" class="pending-reminder" hidden></div><div id="analysis-action"></div><button id="restore" class="text-button restore-link">已有进度备份？从这里继续</button></section>
+<div id="job-status" aria-live="polite"></div>
+<section id="review-section" hidden><div class="review-toolbar"><span id="progress-label"></span><button id="review-history" class="text-button">处理记录</button></div><div id="review-progress"></div><div id="review-navigation"></div><div id="suggestions"></div><div id="review-tools"></div></section>
+<section id="export-panel" class="result-card" hidden><div class="result-document" aria-hidden="true"><svg class="icon"><use href="#i-table"/></svg><span>✓</span></div><h2 id="export-heading">任务表已更新</h2><p id="result-counts"></p><button id="export-bundle" class="primary">下载结果 <span aria-hidden="true">↓</span></button><p class="download-caption">选择任务表，或包含说明与备份的完整结果包</p><div id="deferred-summary"></div><div class="result-links"><button id="next-batch" class="text-button">继续上传下一批聊天 <span aria-hidden="true">→</span></button><button id="result-history" class="text-button">查看处理记录</button></div><p id="export-note" class="sr-only"></p></section>
+<details id="conversation" class="conversation" hidden><summary>与聊有数的对话 <span id="message-count"></span></summary><div id="messages"></div></details>
+</div>
+<div id="decision-bar" hidden></div>
+<form id="chat-form" class="chat-composer"><div class="composer-input"><button type="button" id="attach" class="icon-button" aria-label="添加聊天记录">＋</button><label for="question" class="sr-only">向聊有数提问</label><textarea id="question" rows="1" placeholder="询问任务、建议或原文依据…"></textarea><button type="submit" id="ask" aria-label="发送消息">↑</button></div><div class="composer-footer"><span>询问只给解释，不会改表</span><button id="add-context" type="button" class="text-button">补充新情况</button></div></form>
+<p class="chat-footnote">你确认后，才会更新任务表。</p>
+</section>
+<aside class="right-column" hidden aria-label="当前正式任务"><div class="side-heading"><h2>当前任务</h2><button id="close-inspector" class="icon-button" aria-label="收起任务表">×</button></div><button id="expand-table" class="text-button full-table-link">打开完整表格 ↗</button><div id="table-focus" hidden></div><div id="task-table"></div><div id="table-toolbar"><span id="task-count"></span><label class="sr-only" for="search">查找任务</label><input id="search" type="search" placeholder="查找任务"></div><div id="task-list"></div><div id="table-foot"><button id="undo-last" class="text-button" hidden>撤销上次确认</button></div></aside>
+</main>
+<main id="library-view" class="library-view" hidden><div id="library-content"></div></main>
+</div>
+<input type="file" id="task-file" accept=".csv,text/csv" hidden><input type="file" id="chat-file" accept=".csv,text/csv" hidden><input type="file" id="restore-file" accept=".json,application/json" hidden><dialog id="dialog"><div id="dialog-content"></div></dialog>
+</body></html>
