@@ -1,0 +1,17 @@
+输出 JSON 对象：
+{
+  "summary": "本批分析的简短中文说明",
+  "suggestions": [
+    {
+      "task_id": "已有任务的编号，无法归属时为 null",
+      "reason": "为什么建议改变/为何需要核实，说明来源角色",
+      "priority": "conflict 或 important 或 normal",
+      "changes": [
+        {"field": "工作项/责任人/当前安排/截止日/验收条件之一", "before": "与原表逐字相同", "after": "建议的新值", "evidence_ids": ["聊天编号"]}
+      ],
+      "evidence": [{"record_id": "聊天编号", "quote": "从该聊天内容逐字摘录的非空原文"}],
+      "questions": ["冲突或信息不足时的具体问题；无则空数组"]
+    }
+  ]
+}
+所有键必填。changes 可以为空，此时必须至少有一个 questions。evidence 不得为空。每个变化必须引用 evidence 中出现的编号。每条建议至少引用一条 new_records。只允许既有任务，禁止新增、删除或修改任务编号。其他未知键禁止。
